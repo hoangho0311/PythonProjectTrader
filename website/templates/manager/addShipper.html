@@ -1,0 +1,24 @@
+{% extends "home.html" %}
+{% block content_ct %}
+
+<form  method="POST">
+    <h3 align="center">Add Shipper</h3>
+    <div class="form-group">
+        <label for="ShipperID">ShipperID</label>
+        <input type="text" name="ShipperID" id="ShipperID" placeholder="Enter ShipperID" class="form-control">
+
+    </div>
+    <div class="form-group">
+        <label for="CompanyName">CompanyName</label>
+        <input type="text" name="CompanyName" id="CompanyName" placeholder="Enter CompanyName" class="form-control">
+        
+    </div>
+    <div class="form-group">
+        <label for="Phone">Phone</label>
+        <input type="text" name="Phone" id="Phone" placeholder="Enter Phone" class="form-control">  
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}

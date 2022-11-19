@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block main_content %}
+<div class="row">
+    <div class="col-sm-1">
+        <nav class="navbar">
+            <ul class="navbar-nav">
+              <li class="nav-item pt-3">
+                <a class="nav-link" href="#">Dashboard</a>
+              </li>
+              <li class="nav-item pt-3">
+                <a class="nav-link" href="/buyproduct">Buy</a>
+              </li>
+              <li class="nav-item pt-3">
+                <a class="nav-link" href="#">Profile</a>
+              </li>
+              <li class="nav-item pt-3">
+                <a href="#demo" class="nav-link" data-toggle="collapse">Manager</a>
+              </li>
+              <div id="demo" class="collapse">
+                <a class="dropdown-item" href="/customermanager">Customer</a>
+                <a class="dropdown-item" href="/shippermanager">Shipper</a>
+                <a class="dropdown-item" href="/employeemanager">Employees</a>
+                <a class="dropdown-item" href="/suppliermanager">Supplier</a>
+                <a class="dropdown-item" href="/categoriesmanager">Categories</a>
+              </div>
+              <li class="nav-item pt-3">
+                <a href="/productmanager" class="nav-link">Product Manager</a>
+              </li>
+              <li class="nav-item pt-3">
+                <a href="/ordermanager" class="nav-link">Order Manager</a>
+              </li>
+            </ul>
+          
+          </nav>
+
+    </div>
+    <div class="col-sm-11">
+        {% block content_ct %}
+            
+        {% endblock %}
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "home.html" %}
+{% block content_ct %}
+
+<form  method="post">
+    <h3 align="center">Add Customer</h3>
+    <div class="form-group">
+        <label for="customerid">Customerid</label>
+        <input type="text" name="customerid" id="customerid" placeholder="Enter customerid" class="form-control">
+
+    </div>
+    <div class="form-group">
+        <label for="CompanyName">CompanyName</label>
+        <input type="text" name="CompanyName" id="CompanyName" placeholder="Enter CompanyName" class="form-control">
+        
+    </div>
+    <div class="form-group">
+        <label for="ContactName">ContactName</label>
+        <input type="text" name="ContactName" id="ContactName" placeholder="Enter ContactName" class="form-control">  
+    </div>
+    <div class="form-group">
+        <label for="Address">Address</label>
+        <input type="text" name="Address" id="Address" placeholder="Enter Address" class="form-control">  
+    </div>
+    <div class="form-group">
+        <label for="City">City</label>
+        <input type="text" name="City" id="City" placeholder="Enter City" class="form-control">  
+    </div>
+    <div class="form-group">
+        <label for="Country">Country</label>
+        <input type="text" name="Country" id="Country" placeholder="Enter Country" class="form-control">  
+    </div>
+    <div class="form-group">
+        <label for="Phone">Phone</label>
+        <input type="text" name="Phone" id="Phone" placeholder="Enter Phone" class="form-control">  
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}

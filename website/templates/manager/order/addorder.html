@@ -1,0 +1,82 @@
+{% extends "home.html" %}
+{% block content_ct %}
+
+<form  method="post">
+    <h3 align="center">New Order</h3>
+    <div class="row">
+        <div class="col pt-3">
+            <div class="form-group">
+                <label for="sel1">CustomerID:</label>
+                <select name="CustomerID" id="CustomerID" class="form-control" id="sel1">
+                    {% for item in customerData %}
+                    <option value="{{item.0}}">{{item.2}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="sel1">EmployeeID:</label>
+                <select name="EmployeeID" id="EmployeeID" class="form-control" id="sel1">
+                    {% for item in employeeData %}
+                    <option value="{{item.0}}">{{item.1}} {{item.2}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="OrderDate">OrderDate</label>
+                <input type="text" name="OrderDate" id="OrderDate" placeholder="Enter OrderDate" class="form-control">  
+            </div>
+            <div class="form-group">
+                <label for="RequiredDate">RequiredDate</label>
+                <input type="text" name="RequiredDate" id="RequiredDate" placeholder="Enter RequiredDate" class="form-control">  
+            </div>
+            <div class="form-group">
+                <label for="ShippedDate">ShippedDate</label>
+                <input type="text" name="ShippedDate" id="ShippedDate" placeholder="Enter ShippedDate" class="form-control">  
+            </div>
+            <div class="form-group">
+                <label for="sel1">ShipVia:</label>
+                <select name="ShipVia" id="ShipVia" class="form-control" id="sel1">
+                    {% for item in shipperData %}
+                    <option value="{{item.0}}">{{item.1}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Freight">Freight</label>
+                <input type="text" name="Freight" id="Freight" placeholder="Enter Freight" class="form-control">  
+            </div>
+        </div>
+        <div class="col pt-3">
+            <div class="form-group">
+                <label for="ShipName">ShipName</label>
+                <input type="text" name="ShipName" id="ShipName" placeholder="Enter ShipName" class="form-control">
+        
+            </div>
+            <div class="form-group">
+                <label for="ShipAddress">ShipAddress</label>
+                <input type="text" name="ShipAddress" id="ShipAddress" placeholder="Enter ShipAddress" class="form-control">  
+            </div>
+            <div class="form-group">
+                <label for="ShipCity">ShipCity</label>
+                <input type="text" name="ShipCity" id="ShipCity" placeholder="Enter ShipCity" class="form-control">  
+            </div>
+            <div class="form-group">
+                <label for="ShipRegion">ShipRegion</label>
+                <input type="text" name="ShipRegion" id="ShipRegion" placeholder="Enter ShipRegion" class="form-control">  
+            </div>
+            <div class="form-group">
+                <label for="ShipPostalCode">ShipPostalCode</label>
+                <input type="text" name="ShipPostalCode" id="ShipPostalCode" placeholder="Enter ShipPostalCode" class="form-control">  
+            </div>
+            <div class="form-group">
+                <label for="ShipCountry">ShipCountry</label>
+                <input type="text" name="ShipCountry" id="ShipCountry" placeholder="Enter ShipCountry" class="form-control">  
+            </div>
+        </div>
+      </div>
+    
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endblock %}
