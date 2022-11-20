@@ -1,7 +1,9 @@
 # PythonProjectTrader
 Function: 
 - CRUD
+![crud](https://user-images.githubusercontent.com/99375115/202906279-f9af6440-b7c6-4730-8ad1-b43d243797ad.PNG)
 - ANALYST PRODUCT, ANALYST ORDER
+![Uploading dab.PNG…]()
 - SEARCH ORDER
 ![searchpr](https://user-images.githubusercontent.com/99375115/202906218-cd330f53-41cb-476a-8185-ccb93030f6d4.PNG)
 - SEE ORDER DETAIL AND ADD PRODUCT
