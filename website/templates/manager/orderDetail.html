@@ -1,81 +1,132 @@
 {% extends "home.html" %}
 {% block content_ct %}
-    <a href="/ordermanager/addorder" class="btn btn-primary">Add New Order</a>
-    <div class="mt-2">       
-        <table class="table table-hover">
+<form  method="post">
+   <h3 align="center">Order Details</h3>
+   <div class="row">
+      {% for item in data %}
+       <div class="col pt-3">
+           <div class="form-group">
+               <label for="sel1">CustomerID:</label>
+               <select name="CustomerID" id="CustomerID" class="form-control" id="sel1">
+                  <option value="{{item.0}}">{{item.1}}</option>
+                   {% for row in customerData %}
+                   <option value="{{row.0}}">{{row.2}}</option>
+                   {% endfor %}
+               </select>
+           </div>
+           <div class="form-group">
+               <label for="sel1">EmployeeID:</label>
+               <select name="EmployeeID" id="EmployeeID" class="form-control" id="sel1">
+                    <option value="{{item.0}}">{{item.2}}</option>
+                   {% for row in employeeData %}
+                   <option value="{{row.0}}">{{row.1}} {{row.2}}</option>
+                   {% endfor %}
+               </select>
+           </div>
+           <div class="form-group">
+               <label for="OrderDate">OrderDate</label>
+               <input type="text" name="OrderDate" id="OrderDate" placeholder="Enter OrderDate" class="form-control" value="{{item.3}}">  
+           </div>
+           <div class="form-group">
+               <label for="RequiredDate">RequiredDate</label>
+               <input type="text" name="RequiredDate" id="RequiredDate" placeholder="Enter RequiredDate" class="form-control" value="{{item.4}}">  
+           </div>
+           <div class="form-group">
+               <label for="ShippedDate">ShippedDate</label>
+               <input type="text" name="ShippedDate" id="ShippedDate" placeholder="Enter ShippedDate" class="form-control" value="{{item.5}}">  
+           </div>
+           <div class="form-group">
+               <label for="sel1">ShipVia:</label>
+               <select name="ShipVia" id="ShipVia" class="form-control" id="sel1">
+                  <option value="{{item.6}}">{{item.6}}</option>
+                   {% for row in shipperData %}
+                   <option value="{{row.0}}">{{row.1}}</option>
+                   {% endfor %}
+               </select>
+           </div>
+           <div class="form-group">
+               <label for="Freight">Freight</label>
+               <input type="text" name="Freight" id="Freight" placeholder="Enter Freight" class="form-control" value="{{item.7}}">  
+           </div>
+       </div>
+       <div class="col pt-3">
+           <div class="form-group">
+               <label for="ShipName">ShipName</label>
+               <input type="text" name="ShipName" id="ShipName" placeholder="Enter ShipName" class="form-control" value="{{item.8}}">
+       
+           </div>
+           <div class="form-group">
+               <label for="ShipAddress">ShipAddress</label>
+               <input type="text" name="ShipAddress" id="ShipAddress" placeholder="Enter ShipAddress" class="form-control" value="{{item.9}}">  
+           </div>
+           <div class="form-group">
+               <label for="ShipCity">ShipCity</label>
+               <input type="text" name="ShipCity" id="ShipCity" placeholder="Enter ShipCity" class="form-control" value="{{item.10}}">  
+           </div>
+           <div class="form-group">
+               <label for="ShipRegion">ShipRegion</label>
+               <input type="text" name="ShipRegion" id="ShipRegion" placeholder="Enter ShipRegion" class="form-control" value="{{item.11}}">  
+           </div>
+           <div class="form-group">
+               <label for="ShipPostalCode">ShipPostalCode</label>
+               <input type="text" name="ShipPostalCode" id="ShipPostalCode" placeholder="Enter ShipPostalCode" class="form-control" value="{{item.12}}">  
+           </div>
+           <div class="form-group">
+               <label for="ShipCountry">ShipCountry</label>
+               <input type="text" name="ShipCountry" id="ShipCountry" placeholder="Enter ShipCountry" class="form-control" value="{{item.13}}">  
+           </div>
+       </div>
+       
+       {% endfor %}
+     </div>
+     <div class="form-group">
+        <label for="sel1">Product order:</label>
+        <table class="table table-bordered">
             <thead>
-            <tr>
-                <th>OrderID</th>
-                <th>OrderDate</th>
-                <th>RequiredDate</th>
-                <th>ShippedDate </th>
-                <th>ShipVia</th>
-                <th>Freight</th>
-                <th>Action</th>
-            </tr>
+              <tr>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Discount</th>
+              </tr>
             </thead>
             <tbody>
-            {% for item in data %}
-            <tr>
-                <td>{{item.0}}</td>
-                <td>{{item.3}}</td>
-                <td>{{item.4}}</td>
-                <td>{{item.5}}</td>
-                <td>{{item.6}}</td>
-                <td>{{item.7}}</td>
-                <td>
-                    <a href="" class="btn btn-warning btn-xs" >OrderDetail</a>
-                    <a href="/updateOrder/{{item.0}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{item.0}}">Edit</a>
-                    <a href="/deleteOrder/{{ item.0 }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure For Delete?')">Delete</a>
-                </td>
-            </tr>
-
-            <div id="modaledit{{item.0}}" class="modal fade" role="dialog">
-                <div class="modal-dialog">        
-                   <div class="modal-content">
-                      <div class="modal-header">
-                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                         <h4 class="modal-title">Update Information</h4>
-                      </div>
-                      <div class="modal-body">
-                         <form action="{{ url_for('auth.updateOrder') }}" method="POST">
-                            <div class="form-group">
-                               <label>ContactName:</label>
-                                <input type="hidden"  name="id" value="{{item.0}}">            
-                                <input type="text" class="form-control" name="ContactName" value="{{item.2}}">
-                            </div>               
-                            <div class="form-group">
-                               <label>Address:</label>
-                               <input type="text" class="form-control" name="Address" value="{{item.4}}">
-                            </div>
-                            <div class="form-group">
-                               <label>Phone:</label>
-                               <input type="text" class="form-control" name="phone" value="{{item.8}}">
-                            </div>
-                            <div class="form-group">
-                               <button class="btn btn-primary" type="sbumit">Update</button>
-                            </div>
-                         </form>
-                      </div>
-                      <div class="modal-footer">
-                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      </div>
-                   </div>
-                </div>
-             </div>
-
-            {% endfor%}
-            
+            {% for row in productData %}
+            {% for data in orderDetailData %}
+                {% if data.1 == row.0 %}
+                      <tr>
+                        <td>{{row.1}}</td>
+                        <td>{{data.2}}</td>
+                        <td>{{data.3}}</td>
+                        <td>{{data.4}}</td>
+                      </tr>
+                {% endif %}
+            {% endfor %}
+            {% endfor %}
             </tbody>
-        </table>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="/orderDetail">Previous</a></li>
-              <li class="page-item"><a class="page-link" href="/orderDetail/page/2">1</a></li>
-              <li class="page-item"><a class="page-link" href="/orderDetail/page/3">2</a></li>
-              <li class="page-item"><a class="page-link" href="/orderDetail/page/4">3</a></li>
-              <li class="page-item"><a class="page-link" href="/orderDetail/page/5">Next</a></li>
-            </ul>
-          </nav>
+            </table>
     </div>
+     <div class="form-group">
+        <label for="sel1">Add more Product</label>
+        <select name="ProductID" id="ProductID" class="form-control" id="sel1">
+            {% for row in productData %}
+            <option name="ProductID" value="{{row.0}}">Product Name: {{row.1}}  / Price: {{row.5}} / UnitsInStock: {{row.6}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <!-- <div class="form-group">
+        <label for="UnitPrice">UnitPrice</label>
+        <input type="text" name="UnitPrice" id="UnitPrice" placeholder="Enter UnitPrice" class="form-control">  
+    </div>
+    <div class="form-group">
+        <label for="Quantity">Quantity</label>
+        <input type="text" name="Quantity" id="Quantity" placeholder="Enter Quantity" class="form-control">  
+    </div> 
+    <div class="form-group">
+        <label for="Discount">Discount</label>
+        <input type="text" name="Discount" id="Discount" placeholder="Enter Discount" class="form-control">  
+    </div> -->
+   <br>
+   <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 {% endblock %}

@@ -4,57 +4,6 @@ from .models import User
 
 auth = Blueprint('auth', __name__)
 
-@auth.route('/login', methods=['GET','POST'])
-def login():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        pass1 = request.form.get('pass')
-
-        mycursor = mydb.cursor()
-        query =("SELECT name,pass FROM user WHERE name = %s AND pass = %s")
-        mycursor.execute(query, (email, pass1))
-
-        myresult = mycursor.fetchall()
-        if(len(myresult)>0):
-            flash('login success', category="success")
-            return redirect(url_for('views.home'))
-        else:
-            flash('login fail', category="error")
-
-    return render_template("login.html")
-
-@auth.route('/logout')
-def logout():
-    return redirect(url_for('auth.login'))
-
-@auth.route('/signup', methods=['GET','POST'])
-def signup():
-    if request.method == 'POST':
-        email = request.form.get('email')
-        firstname = request.form.get('firstname')
-        pass1 = request.form.get('pass1')
-        pass2 = request.form.get('pass2')
-
-        if len(email)<4:
-            flash('Email must be greater than 4 characters.', category='error')
-        elif len(firstname)<2:
-            flash('firstName must be greater than 4 characters.', category='error')
-        elif pass1!=pass2:
-            flash('passwords dont match.', category='error')
-        elif len(pass1) < 8:
-            flash('pass1 must be at least 8 characters.', category='error')
-        else:
-            mycursor = mydb.cursor()
-            sql = "INSERT INTO user (name, pass) VALUES (%s, %s)"
-            val = (email, pass1)
-            mycursor.execute(sql, val)
-
-            mydb.commit()
-            flash('accout create', category="success")
-
-    return render_template("signup.html")
-
-
 # Customer Manager Page
 @auth.route('/customermanager')
 def customermanager():
@@ -510,6 +459,7 @@ def addorderOpen():
     employeeData = mydb.cursor()
     employeeData.execute("select * from employees")
     EPldata=employeeData.fetchall()
+
     return render_template("manager/order/addorder.html", customerData = CTMdata, shipperData = SPdata, employeeData=EPldata)
 
 @auth.route('/ordermanager/addorder', methods=['GET','POST'])
@@ -534,7 +484,7 @@ def addorder():
         val = (CustomerID, EmployeeID, OrderDate, RequiredDate, ShippedDate, ShipVia, Freight, ShipName, ShipAddress, ShipCity, ShipRegion, ShipPostalCode, ShipCountry)
         mycursor.execute(sql, val)
 
-        mydb.commit()
+        mydb.commit()  
         flash('Insert success', category="success")
 
         return redirect(url_for('auth.ordermanager'))
@@ -577,16 +527,67 @@ def deleteOrder(id_data):
     return redirect(url_for('auth.ordermanager'))
 
 # Order Detail
-@auth.route('/orderDetail', defaults={'page':1})
-@auth.route('/orderDetail/page/<int:page>')
-def orderDetail(page):
-    perpage=40
-    startat=page*perpage
+@auth.route('/orderDetail/<string:id_data>', methods = ['GET'])
+def orderDetail(id_data):
     mycursor = mydb.cursor()
-    mycursor.execute("select * from orders limit %s, %s", (startat,perpage))
+    mycursor.execute("SELECT * FROM orders WHERE orderID=%s", (id_data,))
     data=mycursor.fetchall()
-    return render_template("manager/orderDetail.html", data=data)
 
+    customerData = mydb.cursor()
+    customerData.execute("select * from customers")
+    CTMdata=customerData.fetchall()
+
+    shipperData = mydb.cursor()
+    shipperData.execute("select * from shippers")
+    SPdata=shipperData.fetchall()
+
+    employeeData = mydb.cursor()
+    employeeData.execute("select * from employees")
+    EPldata=employeeData.fetchall()
+
+    productData = mydb.cursor()
+    productData.execute("select * from products")
+    PRDData=productData.fetchall()
+
+    orderDetailData = mydb.cursor()
+    orderDetailData.execute("SELECT * FROM orderdetails WHERE OrderID=%s",(id_data,))
+    ORDDTData=orderDetailData.fetchall()
+    return render_template("manager/orderDetail.html", data= data, customerData = CTMdata, shipperData = SPdata, employeeData=EPldata, productData= PRDData, orderDetailData= ORDDTData)
+
+
+@auth.route('/orderDetail/<string:id_data>', methods=['GET','POST'])
+def addorderDetail(id_data):   
+    if request.method == 'POST':
+        OrderID  = id_data
+        ProductID = request.form.get('ProductID')
+        productData = mydb.cursor()
+        productData.execute("SELECT * FROM Products WHERE productId =%s" ,(ProductID,))
+        PRDData=productData.fetchall()
+        UnitPrice = PRDData[0][4]
+        Quantity = PRDData[0][5]
+        Discount  = 0
+        
+        mycursor = mydb.cursor()
+        sql = "INSERT INTO orderdetails (OrderID, ProductID, UnitPrice, Quantity, Discount) VALUES (%s, %s, %s, %s, %s)"
+        val = (OrderID, ProductID, UnitPrice, Quantity, Discount)
+        mycursor.execute(sql, val)
+
+        mydb.commit()
+        flash('Insert success', category="success")
+
+        return redirect(url_for('auth.ordermanager'))
+
+# dashboard
+@auth.route('/dashboard', methods = ['GET'])
+def dashboard():
+    mycursor = mydb.cursor()
+    mycursor.execute("SELECT * FROM products")
+    data=mycursor.fetchall()
+
+    orderData = mydb.cursor()
+    orderData.execute("SELECT * FROM orders LIMIT 5")
+    ODDATA=orderData.fetchall()
+    return render_template("dashboard.html", data= data, orderData= ODDATA)
 
 
 

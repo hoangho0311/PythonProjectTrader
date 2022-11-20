@@ -1,6 +1,17 @@
 {% extends "home.html" %}
 {% block content_ct %}
-    <a href="/ordermanager/addorder" class="btn btn-primary">Add New Order</a>
+      <div class="row">
+         <div class="col">
+         <a href="/ordermanager/addorder" class="btn btn-primary">Add New Order</a>
+         </div>
+         <div class="col"></div>
+         <div class="col">
+            <form class="form-inline" action="/action_page.php">
+               <input class="form-control mr-sm-2" type="text" placeholder="Search">
+               <button class="btn btn-success" type="button"><a href="" style="color: white;">Search</a></button>
+            </form>  
+         </div>
+      </div>
     <div class="mt-2">       
         <table class="table table-hover">
             <thead>
@@ -24,7 +35,7 @@
                 <td>{{item.6}}</td>
                 <td>{{item.7}}</td>
                 <td>
-                    <a href="/orderDetail" class="btn btn-warning btn-xs" >OrderDetail</a>
+                    <a href="/orderDetail/{{item.0}}" class="btn btn-warning btn-xs" >OrderDetail</a>
                     <a href="/updateOrder/{{item.0}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{item.0}}">Edit</a>
                     <a href="/deleteOrder/{{ item.0 }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure For Delete?')">Delete</a>
                 </td>

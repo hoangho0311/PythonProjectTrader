@@ -1,0 +1,85 @@
+{% extends "home.html" %}
+{% block content_ct %}
+    <div class="row">
+        <div class="col">
+            <h4 class="modal-title">Product Analyst</h4>
+            <div id="chart_product">
+            </div>
+        </div>
+        <div class="col">
+            <h4 class="modal-title">Order Analyst</h4>
+            <div id="chart">
+            </div>
+        </div>
+      </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <script>
+      var array = []
+      var inorder = []
+      '{% for item in data %}'
+      '{% if item.7 > 10 %}'
+         array.push('{{item.1}}')
+         inorder.push(parseInt('{{item.7}}'))
+      '{% endif %}'
+      '{% endfor %}'
+      console.log(inorder);
+       var options = {
+          series: inorder,
+          chart: {
+          width: 580,
+          type: 'pie',
+        },
+        labels: array,
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 200
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+        };
+
+        var chart_product = new ApexCharts(document.querySelector("#chart_product"), options);
+        chart_product.render();
+
+        // order ananlyst
+        var order = []
+        var dateorder = []
+        '{% for item in orderData %}'
+        order.push(parseInt('{{item.2}}'))
+        dateorder.push('{{item.4}}')
+        '{% endfor %}'
+        var options = {
+          series: [{
+          data: order
+        }],
+          chart: {
+          type: 'bar',
+          height: 350
+        },
+        plotOptions: {
+          bar: {
+            borderRadius: 4,
+            horizontal: true,
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        xaxis: {
+          categories: dateorder,
+        }
+        };
+
+
+        var chart = new ApexCharts(document.querySelector("#chart"), options);
+        chart.render();
+    </script>
+{% endblock %}
