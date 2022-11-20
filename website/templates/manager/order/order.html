@@ -7,12 +7,12 @@
          <div class="col"></div>
          <div class="col">
             <form class="form-inline" action="/action_page.php">
-               <input class="form-control mr-sm-2" type="text" placeholder="Search">
+               <input class="form-control mr-sm-2" type="text"  name="search_text" id="search_text" placeholder="Search">
                <button class="btn btn-success" type="button"><a href="" style="color: white;">Search</a></button>
             </form>  
          </div>
       </div>
-    <div class="mt-2">       
+    <div class="mt-2 all_data">       
         <table class="table table-hover">
             <thead>
             <tr>
@@ -89,4 +89,9 @@
             </ul>
         </nav>
     </div>
+    <div class="mt-2 all_data search_data">    
+      <table class="table table-hover" id="result"></table>
+    </div>
+
+         
 {% endblock %}

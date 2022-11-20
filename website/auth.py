@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from .database import mydb
 from .models import User
 
@@ -591,7 +591,22 @@ def dashboard():
 
 
 
-
+# search order
+@auth.route("/ajaxlivesearch",methods=["POST","GET"])
+def ajaxlivesearch():
+    mycursor = mydb.cursor()
+    if request.method == 'POST':
+        search_word = request.form['query']
+        print(search_word)
+        if search_word == '':     
+            mycursor.execute("select * from orders ")
+            data=mycursor.fetchall()
+        else:    
+            # numrows = int(cur.rowcount)
+            mycursor.execute("SELECT * from orders WHERE orderid LIKE '%{}%' OR OrderDate LIKE '%{}%' OR Freight LIKE '%{}%' ORDER BY orderid DESC LIMIT 20".format(search_word,search_word,search_word))
+            data=mycursor.fetchall()
+    return jsonify({'htmlresponse': render_template('response.html', orderdata=data)})
+     
 
 
 
