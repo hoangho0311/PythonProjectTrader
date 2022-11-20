@@ -1,0 +1,2 @@
+# PythonProjectTrader
+Function: 
